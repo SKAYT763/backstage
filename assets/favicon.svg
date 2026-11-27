@@ -1,0 +1,31 @@
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 100 100">
+
+    <!-- Графитовый фон -->
+
+    <rect width="100" height="100"
+          rx="18" fill="#111116"/>
+
+    <!-- Звуковые полоски -->
+
+    <g fill="#A78BFA">
+        <rect x="10" y="42.5" width="6" height="15" rx="3"/>
+        <rect x="20" y="36" width="6" height="28" rx="3"/>
+        <rect x="30" y="27" width="6" height="46" rx="3"/>
+        <rect x="40" y="16" width="6" height="68" rx="3"/>
+    </g>
+
+    <!-- Символ B -->
+
+    <path fill="#F5F5F5"
+          d="M50 16 H65
+             C88 16 95 39 79 47
+             C99 60 90 84 67 84
+             H50 V70 H66
+             C80 70 80 55 66 55
+             H50 V40 H64
+             C76 40 76 29 64 29
+             H50 Z"/>
+
+</svg>
