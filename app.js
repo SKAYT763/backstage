@@ -146,46 +146,116 @@ audioPlayer.addEventListener("error", function () {
 });
 
 
+
 /* 8. Анимация фирменного логотипа */
 
 const brandSymbol = document.getElementById("brandSymbol");
 
+const logoBars = brandSymbol.querySelectorAll(".logo-bars rect");
+
+const originalHeights = [15, 28, 46, 68];
+
+let logoPlaying = false;
+let animationFrame = null;
+let animationMix = 0;
+let lastFrameTime = 0;
+
+const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+);
+
+
+/* Отрисовка анимации */
+
+function animateLogo(time) {
+
+    const deltaTime = lastFrameTime
+        ? Math.min((time - lastFrameTime) / 1000, 0.05)
+        : 0.016;
+
+    lastFrameTime = time;
+
+    const target = logoPlaying ? 1 : 0;
+
+    animationMix += (target - animationMix)
+        * (1 - Math.exp(-deltaTime * 6));
+
+
+    logoBars.forEach((bar, index) => {
+
+        const originalHeight = originalHeights[index];
+
+        const waveHeight = 37 + 29 * Math.sin(
+            time / 210 - index * 1.45
+        );
+
+        const height = reducedMotion.matches
+            ? originalHeight
+            : originalHeight +
+              (waveHeight - originalHeight) * animationMix;
+
+        bar.setAttribute("height", height);
+        bar.setAttribute("y", 50 - height / 2);
+
+    });
+
+
+    if (logoPlaying || animationMix > 0.001) {
+
+        animationFrame = requestAnimationFrame(animateLogo);
+
+    } else {
+
+        logoBars.forEach((bar, index) => {
+
+            bar.setAttribute("height", originalHeights[index]);
+            bar.setAttribute("y", 50 - originalHeights[index] / 2);
+
+        });
+
+        animationMix = 0;
+        animationFrame = null;
+        lastFrameTime = 0;
+
+    }
+
+}
+
+
+/* Плавный запуск */
 
 function startLogoAnimation() {
 
-    brandSymbol.classList.add("is-playing");
+    logoPlaying = true;
+
+    if (animationFrame === null) {
+
+        animationFrame = requestAnimationFrame(animateLogo);
+
+    }
 
 }
 
+
+/* Плавная остановка */
 
 function stopLogoAnimation() {
 
-    brandSymbol.classList.remove("is-playing");
+    logoPlaying = false;
 
 }
 
 
-/* Музыка воспроизводится */
+/* События аудиоплеера */
 
 audioPlayer.addEventListener("playing", startLogoAnimation);
 
-
-/* Музыка на паузе */
-
 audioPlayer.addEventListener("pause", stopLogoAnimation);
-
-
-/* Трек закончился */
 
 audioPlayer.addEventListener("ended", stopLogoAnimation);
 
-
-/* Ожидание аудиоданных */
-
 audioPlayer.addEventListener("waiting", stopLogoAnimation);
 
-
-/* Файл сброшен или возникла ошибка */
-
 audioPlayer.addEventListener("emptied", stopLogoAnimation);
+
 audioPlayer.addEventListener("error", stopLogoAnimation);
