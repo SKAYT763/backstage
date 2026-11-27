@@ -159,7 +159,7 @@
 
     const originalHeights = [15, 28, 46, 68];
 
-    const duration = 2.8;
+    const duration = 2.5;
 
     let startTime = null;
 
@@ -241,11 +241,11 @@
         );
 
 
-        /* Раскрытие основного интерфейса */
+        /* Плавное затухание заставки */
 
-        const reveal = smooth(
-            (seconds - 2.15) / 0.65
-        );
+       const reveal = smooth(
+          (seconds - 2.15) / 0.35
+       );
 
 
         /* Анимируем частотный спектр */
@@ -365,13 +365,12 @@
             seconds / 0.8
         ) * (1 - reveal);
 
+       
+       /* Плавное растворение заставки */
 
-        /* Кинематографичное раскрытие */
+       intro.style.opacity = 1 - reveal;
 
-        intro.style.clipPath =
-            `inset(${reveal * 50}% 0 ${reveal * 50}% 0)`;
-
-
+       
         /* Продолжаем или завершаем анимацию */
 
         if (seconds < duration) {
