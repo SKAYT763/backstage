@@ -1,1 +1,87 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111116">
+
+    <title>BACKSTAGE — Artist Toolkit</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">BACKSTAGE<span>.</span></div>
+        <span class="version">V.0.1 ALPHA</span>
+    </header>
+
+    <main class="container">
+
+        <section class="intro">
+            <p class="subtitle">ARTIST WORKSPACE</p>
+            <h1>Твоя музыка.<br>Твои правила.</h1>
+            <p>Цифровые инструменты для независимых артистов.</p>
+        </section>
+
+        <section class="audio-lab">
+            <h2>Audio Lab</h2>
+            <p>Узнай всё о своём треке.</p>
+
+            <label class="upload-zone" for="audioInput">
+                <span class="upload-icon">↑</span>
+                <strong>Загрузить аудиофайл</strong>
+                <small>WAV, MP3, FLAC</small>
+            </label>
+
+            <input type="file" id="audioInput"
+                   accept="audio/*,.wav,.mp3,.flac" hidden>
+
+            <div id="audioResults" hidden>
+                <h3 id="fileName"></h3>
+                <canvas id="waveform"></canvas>
+                <audio id="audioPlayer" controls></audio>
+                <div id="audioStats"></div>
+            </div>
+        </section>
+
+        <section class="tools">
+            <article class="tool-card">
+                <span class="status">SOON</span>
+                <h3>Release Check</h3>
+                <p>Проверка релиза</p>
+            </article>
+
+            <article class="tool-card">
+                <span class="status">SOON</span>
+                <h3>Audio Tools</h3>
+                <p>Работа со звуком</p>
+            </article>
+
+            <article class="tool-card">
+                <span class="status">SOON</span>
+                <h3>Release Planner</h3>
+                <p>Планирование релизов</p>
+            </article>
+
+            <article class="tool-card">
+                <span class="status">SOON</span>
+                <h3>Artist Finance</h3>
+                <p>Финансы артиста</p>
+            </article>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>BACKSTAGE © 2026</p>
+        <p>Independent artist toolkit</p>
+    </footer>
+
+    <script src="audioanalys.js" defer></script>
+    <script src="app.js" defer></script>
+
+</body>
+</html>
+
