@@ -369,3 +369,19 @@ footer {
         padding: 16px 20px;
     }
 }
+
+
+/* 15. Блокировка выделения текста */
+
+body {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+    caret-color: transparent;
+}
+
+input, textarea, [contenteditable="true"] {
+    -webkit-user-select: text;
+    user-select: text;
+    caret-color: auto;
+}
