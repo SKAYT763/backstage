@@ -312,3 +312,60 @@ footer {
     letter-spacing: 3px;
     text-transform: uppercase;
 }
+
+
+
+/* 14. Компактная версия для компьютеров */
+
+@media (min-width: 1024px) {
+
+    .header {
+        padding: 16px 20px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .intro {
+        margin-bottom: 20px;
+    }
+
+    .intro h1 {
+        font-size: 38px;
+        margin-bottom: 10px;
+    }
+
+    .intro h1 br {
+        display: none;
+    }
+
+    .audio-lab {
+        padding: 24px;
+        margin-bottom: 16px;
+    }
+
+    .upload-zone {
+        min-height: 110px;
+        margin-top: 16px;
+        padding: 12px;
+    }
+
+    .tools {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    .tool-card {
+        min-height: 110px;
+        padding: 16px;
+    }
+
+    .tool-card h3 {
+        font-size: 16px;
+    }
+
+    footer {
+        padding: 16px 20px;
+    }
+}
