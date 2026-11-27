@@ -145,3 +145,47 @@ audioPlayer.addEventListener("error", function () {
     }
 });
 
+
+/* 8. Анимация фирменного логотипа */
+
+const brandSymbol = document.getElementById("brandSymbol");
+
+
+function startLogoAnimation() {
+
+    brandSymbol.classList.add("is-playing");
+
+}
+
+
+function stopLogoAnimation() {
+
+    brandSymbol.classList.remove("is-playing");
+
+}
+
+
+/* Музыка воспроизводится */
+
+audioPlayer.addEventListener("playing", startLogoAnimation);
+
+
+/* Музыка на паузе */
+
+audioPlayer.addEventListener("pause", stopLogoAnimation);
+
+
+/* Трек закончился */
+
+audioPlayer.addEventListener("ended", stopLogoAnimation);
+
+
+/* Ожидание аудиоданных */
+
+audioPlayer.addEventListener("waiting", stopLogoAnimation);
+
+
+/* Файл сброшен или возникла ошибка */
+
+audioPlayer.addEventListener("emptied", stopLogoAnimation);
+audioPlayer.addEventListener("error", stopLogoAnimation);
