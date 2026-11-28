@@ -398,7 +398,7 @@
     
 /* ====================================
    8. LIQUID SURFACE
-   Motion Polish 1.1.1
+   Continuous Motion 1.1.2
    ==================================== */
 
 .liquid-surface {
@@ -442,11 +442,9 @@
 
     will-change: transform;
 
-    transition:
+    /* Shape is controlled by SpringPhysics */
 
-        transform
-        var(--liquid-release-duration)
-        var(--liquid-release-motion);
+    transition: none;
 
 }
 
@@ -483,28 +481,8 @@
 
 
 /* ====================================
-   9. PRESS ANIMATION
+   9. PRESS STATE
    ==================================== */
-
-.workspace-nav.is-pressed
-.liquid-surface {
-
-    transform: scale(
-
-        var(--liquid-press-scale),
-
-        var(--liquid-press-scale)
-
-    );
-
-    transition:
-
-        transform
-        var(--liquid-press-duration)
-        var(--liquid-press-motion);
-
-}
-
 
 .workspace-nav.is-pressed
 .liquid-surface::before {
@@ -524,26 +502,6 @@
 .liquid-indicator {
 
     transition: none;
-
-}
-
-
-.workspace-nav.is-dragging
-.liquid-surface {
-
-    transform: scale(
-
-        var(--liquid-stretch-scale),
-
-        var(--liquid-stretch-height)
-
-    );
-
-    transition:
-
-        transform
-        var(--liquid-stretch-duration)
-        var(--liquid-stretch-motion);
 
 }
 
