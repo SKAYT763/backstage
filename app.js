@@ -7,7 +7,7 @@
 
 import { AudioCore } from "./engine/core.js";
 import { NavigationEngine } from "./ui/navigation.js";
-import { LiquidUI } from "./ui/;liquid.js";
+import { LiquidUI } from "./ui/liquid.js";
 
 const audioCore = new AudioCore();
 
