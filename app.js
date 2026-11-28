@@ -7,6 +7,7 @@
 
 import { AudioCore } from "./engine/core.js";
 import { NavigationEngine } from "./ui/navigation.js";
+import { LiquidUI } from "./ui/;liquid.js";
 
 const audioCore = new AudioCore();
 
@@ -342,3 +343,15 @@ console.log(
     "BACKSTAGE Navigation Engine:",
     navigation.getState()
 );
+
+
+/* ========================================
+   10. Liquid UI Engine 1.1
+   ======================================== */
+
+const liquidUI = new LiquidUI();
+
+liquidUI.init();
+
+console.log("BACKSTAGE Liquid UI 1.1: Ready");
+
