@@ -4,6 +4,7 @@
    Liquid UI Engine 1.1
    Purple Liquid — Gesture Edition
    ======================================== */
+import { SpringPhysics } from "./spring.js";
 
 export class LiquidUI {
 
@@ -16,6 +17,16 @@ export class LiquidUI {
         this.nav = null;
 
         this.indicator = null;
+
+       /* Continuous Spring Physics */
+       
+       this.surface = null;
+       
+       this.spring = null;
+       
+       this.reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+);
 
         this.observer = null;
 
@@ -85,6 +96,9 @@ export class LiquidUI {
         this.handleClick =
             this.handleClick.bind(this);
 
+       this.handleMotionPreference =
+          this.handleMotionPreference.bind(this);
+
     }
 
 
@@ -119,16 +133,39 @@ export class LiquidUI {
         );
 
 
-        /* Create Glass Surface */
+/* Create Glass Surface */
 
-        const surface =
-            document.createElement("div");
+this.surface =
+    document.createElement("div");
 
-        surface.className =
-            "liquid-surface";
+this.surface.className =
+    "liquid-surface";
+
+this.indicator.appendChild(
+    this.surface
+);
 
 
-        this.indicator.appendChild(surface);
+/* Initialize Spring Physics */
+
+this.spring = new SpringPhysics((x, y) => {
+
+    this.surface.style.transform =
+        `scale(${x}, ${y})`;
+
+});
+
+
+/* Observe Motion Preferences */
+
+this.reducedMotion.addEventListener(
+
+    "change",
+
+    this.handleMotionPreference
+
+);
+
 
         this.nav.prepend(this.indicator);
 
@@ -431,6 +468,107 @@ export class LiquidUI {
     }
 
 
+/* ========================================
+   6.1 CONTINUOUS MOTION CONTROLLER
+   ======================================== */
+
+setMotionState(state) {
+
+    if (!this.spring) return;
+
+
+    /* Accessibility */
+
+    if (this.reducedMotion.matches) {
+
+        this.spring.reset(1, 1);
+
+        return;
+
+    }
+
+
+    switch (state) {
+
+        case "press":
+
+            this.spring.setTarget(
+
+                0.82,
+                0.82,
+                550,
+                44
+
+            );
+
+            break;
+
+
+        case "drag":
+
+            this.spring.setTarget(
+
+                1.08,
+                0.88,
+                260,
+                29
+
+            );
+
+            break;
+
+
+        case "idle":
+
+        default:
+
+            this.spring.setTarget(
+
+                1,
+                1,
+                170,
+                21
+
+            );
+
+            break;
+
+    }
+
+}
+
+
+/* ========================================
+   6.2 MOTION PREFERENCE
+   ======================================== */
+
+handleMotionPreference() {
+
+    if (this.reducedMotion.matches) {
+
+        this.spring?.reset(1, 1);
+
+        return;
+
+    }
+
+    this.setMotionState(
+
+        this.dragging
+
+            ? "drag"
+
+            : this.pointerId !== null
+
+                ? "press"
+
+                : "idle"
+
+    );
+
+}
+
+   
     /* ====================================
        7. POINTER DOWN
        ==================================== */
@@ -509,7 +647,8 @@ export class LiquidUI {
         this.nav.classList.add(
             "is-pressed"
         );
-
+       
+       this.setMotionState("press");
     }
 
 
@@ -553,7 +692,9 @@ handlePointerMove(event) {
         this.nav.classList.add(
             "is-dragging"
         );
-
+       
+       this.setMotionState("drag");
+       
 
         /* Freeze Current Capsule Position */
 
@@ -869,6 +1010,8 @@ handlePointerMove(event) {
 
     );
 
+      this.setMotionState("idle");
+
 
     /* Restore CSS Transitions */
 
@@ -971,6 +1114,18 @@ handlePointerMove(event) {
 
         this.clearClickProtection();
 
+       
+       /* Destroy Spring Physics */
+       
+       this.spring?.destroy();
+       
+       this.reducedMotion.removeEventListener(
+          
+          "change",
+          
+          this.handleMotionPreference
+
+);
 
         this.observer?.disconnect();
 
