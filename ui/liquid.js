@@ -48,6 +48,13 @@ export class LiquidUI {
         this.dragThreshold = 6;
 
 
+       /* Gesture Animation Frame */
+       
+       this.dragFrame = null;
+       
+       this.pendingPointerX = null;
+
+
         /* Click Protection */
 
         this.suppressClick = false;
@@ -510,55 +517,109 @@ export class LiquidUI {
        8. POINTER MOVE
        ==================================== */
 
-    handlePointerMove(event) {
+handlePointerMove(event) {
 
-        if (event.pointerId !== this.pointerId) {
-            return;
-        }
-
-
-        const deltaX =
-
-            event.clientX - this.startX;
+    if (event.pointerId !== this.pointerId) {
+        return;
+    }
 
 
-        /* Start Sliding After Threshold */
-
-        if (
-
-            !this.dragging &&
-
-            Math.abs(deltaX) >
-            this.dragThreshold
-
-        ) {
-
-            /* Freeze Current Visual Position */
-
-            const visualX =
-                this.getVisualPosition();
+    const deltaX =
+        event.clientX - this.startX;
 
 
-            this.originX =
-                visualX - deltaX;
+    /* Start Sliding */
+
+    if (
+
+        !this.dragging &&
+
+        Math.abs(deltaX) >
+        this.dragThreshold
+
+    ) {
+
+        const visualX =
+            this.getVisualPosition();
 
 
-            this.dragging = true;
+        this.originX =
+            visualX - deltaX;
 
 
-            this.nav.classList.add(
-                "is-dragging"
+        this.dragging = true;
+
+
+        this.nav.classList.add(
+            "is-dragging"
+        );
+
+
+        /* Freeze Current Capsule Position */
+
+        const activeButton =
+            this.getActiveButton();
+
+
+        if (activeButton) {
+
+            this.setPosition(
+
+                visualX,
+
+                activeButton.offsetTop
+
             );
 
         }
 
-
-        if (!this.dragging) return;
-
-
-        this.moveCapsule(event.clientX);
-
     }
+
+
+    if (!this.dragging) return;
+
+
+    /* Save Latest Pointer Position */
+
+    this.pendingPointerX =
+        event.clientX;
+
+
+    /* Synchronize With Display Refresh */
+
+    if (this.dragFrame !== null) return;
+
+
+    this.dragFrame = requestAnimationFrame(() => {
+
+        this.dragFrame = null;
+
+
+        if (
+
+            this.pointerId === null ||
+
+            !this.dragging ||
+
+            this.pendingPointerX === null
+
+        ) {
+
+            return;
+
+        }
+
+
+        this.moveCapsule(
+            this.pendingPointerX
+        );
+
+
+        this.pendingPointerX = null;
+
+    });
+
+}
 
 
     /* ====================================
@@ -769,52 +830,70 @@ export class LiquidUI {
        13. RESET GESTURE STATE
        ==================================== */
 
-    resetGesture() {
+   resetGesture() {
 
-        const previousPointer =
-            this.pointerId;
+    /* Cancel Pending Animation Frame */
 
+    if (this.dragFrame !== null) {
 
-        this.pointerId = null;
-
-        this.pressedButton = null;
-
-        this.dragging = false;
-
-
-        this.nav.classList.remove(
-
-            "is-pressed",
-
-            "is-dragging"
-
+        cancelAnimationFrame(
+            this.dragFrame
         );
 
-
-        /* Restore CSS Transitions */
-
-        this.indicator.getBoundingClientRect();
-
-
-        /* Release Pointer Capture */
-
-        if (
-
-            previousPointer !== null &&
-
-            this.nav.hasPointerCapture(
-                previousPointer
-            )
-
-        ) {
-
-            this.nav.releasePointerCapture(
-                previousPointer
-            );
-
-        }
+        this.dragFrame = null;
 
     }
+
+
+    this.pendingPointerX = null;
+
+
+    /* Reset Gesture State */
+
+    const previousPointer =
+        this.pointerId;
+
+
+    this.pointerId = null;
+
+    this.pressedButton = null;
+
+    this.dragging = false;
+
+
+    this.nav.classList.remove(
+
+        "is-pressed",
+
+        "is-dragging"
+
+    );
+
+
+    /* Restore CSS Transitions */
+
+    this.indicator.getBoundingClientRect();
+
+
+    /* Release Pointer Capture */
+
+    if (
+
+        previousPointer !== null &&
+
+        this.nav.hasPointerCapture(
+            previousPointer
+        )
+
+    ) {
+
+        this.nav.releasePointerCapture(
+            previousPointer
+        );
+
+    }
+
+}
 
 
     /* ====================================
