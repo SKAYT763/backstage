@@ -6,6 +6,7 @@
    ===================================== */
 
 import { AudioCore } from "./engine/core.js";
+import { NavigationEngine } from "./ui/navigation.js";
 
 const audioCore = new AudioCore();
 
@@ -327,3 +328,17 @@ audioPlayer.addEventListener("waiting", stopLogoAnimation);
 audioPlayer.addEventListener("emptied", stopLogoAnimation);
 
 audioPlayer.addEventListener("error", stopLogoAnimation);
+
+
+/* =====================================
+   9. Навигация приложения
+   ===================================== */
+
+const navigation = new NavigationEngine();
+
+navigation.init("audio-lab");
+
+console.log(
+    "BACKSTAGE Navigation Engine:",
+    navigation.getState()
+);
