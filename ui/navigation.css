@@ -290,3 +290,130 @@
     }
 
 }
+
+
+
+/* ========================================
+   11. Responsive Navigation & Dock Bar
+   ======================================== */
+
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-button svg {
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nav-button span {
+    min-width: 0;
+}
+
+
+/* Mobile Dock Bar */
+
+@media (max-width: 768px) {
+
+    .app-shell {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        padding: 16px;
+    }
+
+    .workspace-sidebar {
+        position: fixed;
+
+        left: 12px;
+        right: 12px;
+
+        bottom: calc(
+            12px + env(safe-area-inset-bottom, 0px)
+        );
+
+        z-index: 1000;
+
+        margin: 0;
+        padding: 6px;
+
+        background: rgba(24, 24, 30, 0.94);
+
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+
+        border: 1px solid #3D354B;
+        border-radius: 20px;
+
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    .workspace-nav {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+
+        gap: 3px;
+        overflow: visible;
+    }
+
+    .nav-button {
+        position: relative;
+
+        flex-direction: column;
+        justify-content: center;
+
+        width: 100%;
+        min-width: 0;
+        min-height: 62px;
+
+        gap: 5px;
+        padding: 8px 2px 12px;
+
+        border-radius: 12px;
+
+        font-size: 10px;
+        line-height: 1.2;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .nav-button svg {
+        width: 21px;
+        height: 21px;
+    }
+
+    .nav-button.is-active::after {
+        content: "";
+
+        position: absolute;
+
+        bottom: 4px;
+        left: 50%;
+
+        width: 12px;
+        height: 3px;
+
+        transform: translateX(-50%);
+
+        background: #A78BFA;
+        border-radius: 4px;
+    }
+
+    body {
+        padding-bottom: calc(
+            105px + env(safe-area-inset-bottom, 0px)
+        );
+    }
+
+}
