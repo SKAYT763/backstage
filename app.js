@@ -8,6 +8,7 @@
 import { AudioCore } from "./engine/core.js";
 import { NavigationEngine } from "./ui/navigation.js";
 import { LiquidUI } from "./ui/liquid.js";
+import { DesktopUI } from "./ui/desktop.js";
 
 const audioCore = new AudioCore();
 
@@ -355,3 +356,16 @@ liquidUI.init();
 
 console.log("BACKSTAGE Liquid UI 1.1: Ready");
 
+
+
+/* ========================================
+   11. DESKTOP STUDIO ENGINE
+   ======================================== */
+
+const desktopUI = new DesktopUI();
+
+desktopUI.init();
+
+console.log(
+    "BACKSTAGE Desktop Studio 1.0: Ready"
+);
