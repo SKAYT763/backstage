@@ -5,6 +5,9 @@
    Основная логика приложения
    ===================================== */
 
+import { AudioCore } from "./engine/core.js";
+
+const audioCore = new AudioCore();
 
 /* 1. Получаем HTML-элементы */
 
@@ -21,12 +24,15 @@ const waveform = document.getElementById("waveform");
 const allowedFormats = ["wav", "mp3", "flac"];
 
 let currentAudioURL = null;
+let analysisRequestId = 0;
 
 
 /* 3. Очистка предыдущего файла */
 
 function resetAudio() {
-
+   
+    analysisRequestId++;
+    audioCore.clear();
     audioPlayer.pause();
     audioPlayer.removeAttribute("src");
     audioPlayer.load();
@@ -55,7 +61,7 @@ function formatDuration(seconds) {
 
 /* 5. Обработка выбранного файла */
 
-audioInput.addEventListener("change", function () {
+audioInput.addEventListener("change", async function () {
 
     const file = audioInput.files[0];
 
@@ -114,9 +120,66 @@ audioInput.addEventListener("change", function () {
     audioStats.textContent =
         `Формат: ${extension.toUpperCase()} | Размер: ${fileSize} МБ`;
 
+
     // Позволяем повторно выбрать тот же файл
 
     audioInput.value = "";
+
+    // Запускаем Audio Core
+
+    const requestId = analysisRequestId;
+
+    const engineInfo = document.createElement("div");
+
+    engineInfo.textContent =
+        "Audio Engine: декодирование...";
+
+    audioStats.appendChild(engineInfo);
+
+    try {
+
+        const buffer = await audioCore.load(file);
+
+        if (
+            requestId !== analysisRequestId ||
+            buffer === null
+        ) {
+            return;
+        }
+
+        engineInfo.textContent =
+            "Audio Engine: Ready";
+
+        console.log("BACKSTAGE Audio Core", {
+            fileName: file.name,
+            duration: buffer.duration,
+            sampleRate: buffer.sampleRate,
+            channels: buffer.numberOfChannels,
+            samplesPerChannel: buffer.length,
+            totalSamples:
+                buffer.length * buffer.numberOfChannels,
+            memoryMiB:
+                (
+                    buffer.length *
+                    buffer.numberOfChannels *
+                    4 / 1024 / 1024
+                ).toFixed(2)
+        });
+
+    } catch (error) {
+
+        if (requestId !== analysisRequestId) {
+            return;
+        }
+
+        engineInfo.textContent =
+            "Audio Engine: ошибка декодирования";
+
+        console.error(
+            "BACKSTAGE Audio Core Error:",
+            error
+        );
+    }
 });
 
 
@@ -128,7 +191,12 @@ audioPlayer.addEventListener("loadedmetadata", function () {
 
         const duration = formatDuration(audioPlayer.duration);
 
-        audioStats.textContent += ` | Длительность: ${duration}`;
+       audioStats.insertBefore(
+    document.createTextNode(
+        ` | Длительность: ${duration}`
+    ),
+    audioStats.querySelector("div")
+);
     }
 });
 
