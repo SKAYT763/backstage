@@ -334,7 +334,8 @@
 
     .workspace-sidebar {
         position: fixed;
-
+       
+        top: auto;
         left: 12px;
         right: 12px;
 
