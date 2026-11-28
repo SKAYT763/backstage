@@ -65,62 +65,396 @@
     <div class="version">V.0.1 ALPHA</div>
 
 </header>
-    <main class="container">
+    
+<div class="app-shell">
 
-        <section class="intro">
-            <p class="subtitle">ARTIST WORKSPACE</p>
-            <h1>Твоя музыка.<br> Твои правила.</h1>
-            <p>Цифровые инструменты для независимых артистов.</p>
-        </section>
+    <!-- 1. Основная навигация -->
 
-        <section class="audio-lab">
-            <h2>Audio Lab</h2>
-            <p>Узнай всё о своём треке.</p>
+    <aside class="workspace-sidebar">
 
-            <label class="upload-zone" for="audioInput">
-                <span class="upload-icon">↑</span>
-                <strong>Загрузить аудиофайл</strong>
-                <small>WAV, MP3, FLAC</small>
-            </label>
+        <p class="workspace-label">
+            WORKSPACE
+        </p>
 
-            <input type="file" id="audioInput"
-                   accept=".wav,.mp3,.flac" hidden>
+        <nav class="workspace-nav"
+             aria-label="Основные разделы">
 
-            <div id="audioResults" hidden>
-                <h3 id="fileName"></h3>
-                <canvas id="waveform"></canvas>
-                <audio id="audioPlayer" controls></audio>
-                <div id="audioStats"></div>
+            <button type="button"
+                    class="nav-button"
+                    data-nav-module="audio-lab">
+                Audio Lab
+            </button>
+
+            <button type="button"
+                    class="nav-button"
+                    data-nav-module="chord-lab">
+                Chord Lab
+            </button>
+
+            <button type="button"
+                    class="nav-button"
+                    data-nav-module="stem-lab">
+                Stem Lab
+            </button>
+
+            <button type="button"
+                    class="nav-button"
+                    data-nav-module="audio-tools">
+                Audio Tools
+            </button>
+
+            <button type="button"
+                    class="nav-button"
+                    data-nav-module="artist-hub">
+                Artist Hub
+            </button>
+
+        </nav>
+
+    </aside>
+
+    <!-- 2. Рабочая область -->
+
+    <main class="workspace-content">
+
+        <!-- AUDIO LAB -->
+
+        <section class="module-panel"
+                 data-module-panel="audio-lab">
+
+            <div class="module-heading">
+
+                <p class="workspace-label">
+                    ARTIST WORKSPACE
+                </p>
+
+                <h1>Audio Lab</h1>
+
+                <p>Узнай всё о своём треке.</p>
+
             </div>
+
+            <!-- Постоянный аудиоплеер -->
+
+            <section class="audio-lab">
+
+                <label class="upload-zone"
+                       for="audioInput">
+
+                    <span class="upload-icon">↑</span>
+
+                    <strong>Загрузить аудиофайл</strong>
+
+                    <small>WAV, MP3, FLAC</small>
+
+                </label>
+
+                <input type="file"
+                       id="audioInput"
+                       accept=".wav,.mp3,.flac"
+                       hidden>
+
+                <div id="audioResults" hidden>
+
+                    <h3 id="fileName"></h3>
+
+                    <canvas id="waveform"></canvas>
+
+                    <audio id="audioPlayer"
+                           controls></audio>
+
+                    <div id="audioStats"></div>
+
+                </div>
+
+            </section>
+
+            <!-- Вкладки Audio Lab -->
+
+            <nav class="module-tabs"
+                 aria-label="Инструменты Audio Lab">
+
+                <button type="button"
+                        data-nav-tab="overview">
+                    Overview
+                </button>
+
+                <button type="button"
+                        data-nav-tab="mastering">
+                    Mastering
+                </button>
+
+                <button type="button"
+                        data-nav-tab="spectrum">
+                    Spectrum
+                </button>
+
+                <button type="button"
+                        data-nav-tab="reference">
+                    Reference
+                </button>
+
+            </nav>
+
+            <!-- OVERVIEW -->
+
+            <section class="tab-panel"
+                     data-tab-panel="overview">
+
+                <h2>Track Overview</h2>
+
+                <div class="module-placeholder">
+
+                    <span class="status">
+                        IN DEVELOPMENT
+                    </span>
+
+                    <h3>Audio Inspector</h3>
+
+                    <p>
+                        Характеристики аудиофайла,
+                        BPM, тональность и проверка качества.
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- MASTERING -->
+
+            <section class="tab-panel"
+                     data-tab-panel="mastering"
+                     hidden>
+
+                <h2>Mastering</h2>
+
+                <div class="module-placeholder">
+
+                    <span class="status">
+                        COMING SOON
+                    </span>
+
+                    <h3>Loudness &amp; Dynamics</h3>
+
+                    <p>
+                        LUFS, True Peak, RMS,
+                        динамика и рекомендации
+                        по мастерингу.
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- SPECTRUM -->
+
+            <section class="tab-panel"
+                     data-tab-panel="spectrum"
+                     hidden>
+
+                <h2>Spectrum</h2>
+
+                <div class="module-placeholder">
+
+                    <span class="status">
+                        COMING SOON
+                    </span>
+
+                    <h3>Frequency &amp; Stereo</h3>
+
+                    <p>
+                        Частотный спектр, стереоширина,
+                        фаза и моносовместимость.
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- REFERENCE -->
+
+            <section class="tab-panel"
+                     data-tab-panel="reference"
+                     hidden>
+
+                <h2>Reference</h2>
+
+                <div class="module-placeholder">
+
+                    <span class="status">
+                        COMING SOON
+                    </span>
+
+                    <h3>Reference Compare</h3>
+
+                    <p>
+                        Сравнение громкости,
+                        динамики и спектра треков.
+                    </p>
+
+                </div>
+
+            </section>
+
         </section>
 
-        <section class="tools">
-            <article class="tool-card">
-                <span class="status">SOON</span>
-                <h3>Release Check</h3>
-                <p>Проверка релиза</p>
-            </article>
+        <!-- CHORD LAB -->
 
-            <article class="tool-card">
-                <span class="status">SOON</span>
-                <h3>Audio Tools</h3>
-                <p>Работа со звуком</p>
-            </article>
+        <section class="module-panel"
+                 data-module-panel="chord-lab"
+                 hidden>
 
-            <article class="tool-card">
-                <span class="status">SOON</span>
-                <h3>Release Planner</h3>
-                <p>Планирование релизов</p>
-            </article>
+            <div class="module-heading">
+                <p class="workspace-label">
+                    ARTIST WORKSPACE
+                </p>
+                <h1>Chord Lab</h1>
+            </div>
 
-            <article class="tool-card">
-                <span class="status">SOON</span>
-                <h3>Artist Finance</h3>
-                <p>Финансы артиста</p>
-            </article>
+            <div class="module-placeholder">
+
+                <span class="status">COMING SOON</span>
+
+                <h3>Music Transcription</h3>
+
+                <p>
+                    Распознавание нот и аккордов,
+                    Piano Roll и экспорт MIDI.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- STEM LAB -->
+
+        <section class="module-panel"
+                 data-module-panel="stem-lab"
+                 hidden>
+
+            <div class="module-heading">
+                <p class="workspace-label">
+                    ARTIST WORKSPACE
+                </p>
+                <h1>Stem Lab</h1>
+            </div>
+
+            <div class="module-placeholder">
+
+                <span class="status">COMING SOON</span>
+
+                <h3>Stem Separation</h3>
+
+                <p>
+                    Разделение аудио на вокал,
+                    барабаны, бас и другие инструменты.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- AUDIO TOOLS -->
+
+        <section class="module-panel"
+                 data-module-panel="audio-tools"
+                 hidden>
+
+            <div class="module-heading">
+                <p class="workspace-label">
+                    ARTIST WORKSPACE
+                </p>
+                <h1>Audio Tools</h1>
+            </div>
+
+            <div class="module-placeholder">
+
+                <span class="status">COMING SOON</span>
+
+                <h3>Audio Utilities</h3>
+
+                <p>
+                    Конвертация, метаданные
+                    и создание аудиофрагментов.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- ARTIST HUB -->
+
+        <section class="module-panel"
+                 data-module-panel="artist-hub"
+                 hidden>
+
+            <div class="module-heading">
+                <p class="workspace-label">
+                    ARTIST WORKSPACE
+                </p>
+                <h1>Artist Hub</h1>
+            </div>
+
+            <nav class="module-tabs"
+                 aria-label="Инструменты Artist Hub">
+
+                <button type="button"
+                        data-nav-tab="release-check">
+                    Release Check
+                </button>
+
+                <button type="button"
+                        data-nav-tab="release-planner">
+                    Release Planner
+                </button>
+
+                <button type="button"
+                        data-nav-tab="artist-finance">
+                    Artist Finance
+                </button>
+
+            </nav>
+
+            <section class="tab-panel"
+                     data-tab-panel="release-check">
+
+                <div class="module-placeholder">
+                    <span class="status">COMING SOON</span>
+                    <h3>Release Check</h3>
+                    <p>Проверка материалов перед релизом.</p>
+                </div>
+
+            </section>
+
+            <section class="tab-panel"
+                     data-tab-panel="release-planner"
+                     hidden>
+
+                <div class="module-placeholder">
+                    <span class="status">COMING SOON</span>
+                    <h3>Release Planner</h3>
+                    <p>Планирование музыкальных релизов.</p>
+                </div>
+
+            </section>
+
+            <section class="tab-panel"
+                     data-tab-panel="artist-finance"
+                     hidden>
+
+                <div class="module-placeholder">
+                    <span class="status">COMING SOON</span>
+                    <h3>Artist Finance</h3>
+                    <p>Доходы, расходы и распределение прибыли.</p>
+                </div>
+
+            </section>
+
         </section>
 
     </main>
+
+</div>
 
     <footer>
         <p>BACKSTAGE © 2026</p>
