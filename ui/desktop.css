@@ -1,0 +1,505 @@
+
+/* ========================================
+   BACKSTAGE by SKAYT
+   Desktop Studio 1.0
+   ======================================== */
+
+
+/* ========================================
+   1. DESIGN TOKENS
+   ======================================== */
+
+:root {
+
+    --desktop-sidebar-width: 230px;
+    --desktop-sidebar-compact: 72px;
+
+    --desktop-radius: 20px;
+    --desktop-button-radius: 12px;
+
+    --desktop-motion: 420ms;
+
+    --desktop-ease:
+        cubic-bezier(.2, 1.1, .4, 1);
+
+}
+
+
+/* ========================================
+   2. DESKTOP ELEMENTS
+   ======================================== */
+
+.desktop-sidebar-header,
+.desktop-indicator {
+
+    display: none;
+
+}
+
+
+/* ========================================
+   3. DESKTOP WORKSPACE
+   ======================================== */
+
+@media (min-width: 769px) {
+
+    .app-shell {
+
+        grid-template-columns:
+            var(--desktop-sidebar-width)
+            minmax(0, 1fr);
+
+        max-width: 1600px;
+
+        gap: 24px;
+
+        transition:
+            grid-template-columns
+            var(--desktop-motion)
+            var(--desktop-ease);
+
+    }
+
+
+    .app-shell.sidebar-collapsed {
+
+        grid-template-columns:
+            var(--desktop-sidebar-compact)
+            minmax(0, 1fr);
+
+    }
+
+
+    /* ====================================
+       4. PURPLE GLASS SIDEBAR
+       ==================================== */
+
+    .workspace-sidebar {
+
+        min-width: 0;
+
+        padding: 10px;
+
+        border-radius:
+            var(--desktop-radius);
+
+        border: 1px solid
+            rgba(194, 161, 255, 0.28);
+
+        background: linear-gradient(
+
+            145deg,
+
+            #2C243B,
+
+            #201C2A 55%,
+
+            #241C32
+
+        );
+
+        box-shadow:
+
+            inset 0 1px 2px
+            rgba(230, 212, 255, 0.15),
+
+            0 8px 24px
+            rgba(0, 0, 0, 0.25);
+
+        overflow: hidden;
+
+    }
+
+
+    @supports (
+        backdrop-filter: blur(1px)
+    ) {
+
+        .workspace-sidebar {
+
+            background: linear-gradient(
+
+                145deg,
+
+                rgba(185, 152, 250, 0.16),
+
+                rgba(37, 27, 59, 0.40) 55%,
+
+                rgba(108, 64, 181, 0.15)
+
+            );
+
+            backdrop-filter:
+                blur(22px)
+                saturate(160%);
+
+        }
+
+    }
+
+
+    /* ====================================
+       5. SIDEBAR HEADER
+       ==================================== */
+
+    .desktop-sidebar-header {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 8px;
+
+        height: 38px;
+
+        margin-bottom: 12px;
+
+        padding: 0 5px;
+
+    }
+
+
+    .desktop-sidebar-header
+    .workspace-label {
+
+        margin: 0;
+
+        white-space: nowrap;
+
+    }
+
+
+    /* ====================================
+       6. COLLAPSE BUTTON
+       ==================================== */
+
+    .sidebar-toggle {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        width: 30px;
+        height: 30px;
+
+        padding: 5px;
+
+        color: #CDB9FF;
+
+        background:
+            rgba(167, 139, 250, 0.08);
+
+        border: 1px solid
+            rgba(167, 139, 250, 0.25);
+
+        border-radius: 8px;
+
+        cursor: pointer;
+
+        transition:
+
+            background 180ms ease,
+
+            border-color 180ms ease;
+
+    }
+
+
+    .sidebar-toggle svg {
+
+        width: 18px;
+        height: 18px;
+
+        fill: none;
+
+        stroke: currentColor;
+
+        stroke-width: 1.7;
+
+        stroke-linecap: round;
+
+        stroke-linejoin: round;
+
+        transition:
+            transform 300ms ease;
+
+    }
+
+
+    .sidebar-toggle:hover {
+
+        background:
+            rgba(167, 139, 250, 0.18);
+
+        border-color:
+            rgba(167, 139, 250, 0.45);
+
+    }
+
+
+    .sidebar-toggle:focus-visible {
+
+        outline: 2px solid #A78BFA;
+
+        outline-offset: 2px;
+
+    }
+
+
+    /* ====================================
+       7. DESKTOP NAVIGATION
+       ==================================== */
+
+    .workspace-nav {
+
+        position: relative;
+
+        isolation: isolate;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 5px;
+
+    }
+
+
+    .workspace-nav .nav-button {
+
+        position: relative;
+
+        z-index: 2;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        width: 100%;
+
+        height: 48px;
+
+        min-width: 0;
+
+        padding: 0 14px;
+
+        background: transparent;
+
+        border: 1px solid transparent;
+
+        border-radius:
+            var(--desktop-button-radius);
+
+        color: #B7ACCB;
+
+        font-size: 13px;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        transition:
+            color 180ms ease;
+
+    }
+
+
+    .workspace-nav .nav-button svg {
+
+        width: 21px;
+        height: 21px;
+
+        flex-shrink: 0;
+
+    }
+
+
+    .workspace-nav .nav-button span {
+
+        white-space: nowrap;
+
+    }
+
+
+    .workspace-nav .nav-button:hover {
+
+        color: #F2EAFF;
+
+    }
+
+
+    .workspace-nav .nav-button.is-active {
+
+        color: #F2EAFF;
+
+    }
+
+
+    .workspace-nav:not(.desktop-ready)
+    .nav-button.is-active {
+
+        background:
+            rgba(167, 139, 250, 0.18);
+
+        border-color:
+            rgba(167, 139, 250, 0.30);
+
+    }
+
+
+    /* ====================================
+       8. VERTICAL LIQUID CAPSULE
+       ==================================== */
+
+    .desktop-indicator {
+
+        display: block;
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 48px;
+
+        z-index: 1;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition: none;
+
+    }
+
+
+    .workspace-nav.desktop-ready
+    .desktop-indicator {
+
+        opacity: 1;
+
+        transition:
+            transform 420ms
+            cubic-bezier(.2, 1.25, .4, 1);
+
+    }
+
+
+    .desktop-surface {
+
+        width: 100%;
+        height: 100%;
+
+        border-radius:
+            var(--desktop-button-radius);
+
+        border: 1px solid
+            rgba(215, 196, 255, 0.40);
+
+        background: linear-gradient(
+
+            150deg,
+
+            rgba(198, 172, 255, 0.27),
+
+            rgba(167, 139, 250, 0.09)
+
+        );
+
+        box-shadow:
+
+            inset 0 1px 3px
+            rgba(255, 255, 255, 0.25),
+
+            0 2px 8px
+            rgba(0, 0, 0, 0.20);
+
+        transform-origin: center;
+
+        will-change: transform;
+
+    }
+
+
+    /* ====================================
+       9. COLLAPSED SIDEBAR
+       ==================================== */
+
+    .sidebar-collapsed
+    .desktop-sidebar-header {
+
+        justify-content: center;
+
+        padding: 0;
+
+    }
+
+
+    .sidebar-collapsed
+    .desktop-sidebar-header
+    .workspace-label {
+
+        display: none;
+
+    }
+
+
+    .sidebar-collapsed
+    .sidebar-toggle svg {
+
+        transform: rotate(180deg);
+
+    }
+
+
+    .sidebar-collapsed
+    .workspace-nav
+    .nav-button {
+
+        justify-content: center;
+
+        padding: 0;
+
+        gap: 0;
+
+    }
+
+
+    .sidebar-collapsed
+    .workspace-nav
+    .nav-button span {
+
+        display: none;
+
+    }
+
+}
+
+
+/* ========================================
+   10. ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .app-shell,
+
+    .sidebar-toggle svg,
+
+    .workspace-nav.desktop-ready
+    .desktop-indicator {
+
+        transition: none;
+
+    }
+
+}
