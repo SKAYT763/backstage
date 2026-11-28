@@ -53,13 +53,17 @@
 
         gap: 24px;
 
-        transition:
-            grid-template-columns
-            var(--desktop-motion)
-            var(--desktop-ease);
-
+        transition: none;
     }
 
+.app-shell.desktop-layout-ready {
+
+    transition:
+        grid-template-columns
+        var(--desktop-motion)
+        var(--desktop-ease);
+
+}
 
     .app-shell.sidebar-collapsed {
 
@@ -309,6 +313,9 @@
         transition:
             color 180ms ease;
 
+       justify-content: flex-start;
+flex-shrink: 0;
+       
     }
 
 
@@ -322,11 +329,21 @@
     }
 
 
-    .workspace-nav .nav-button span {
+.workspace-nav .nav-button span {
 
-        white-space: nowrap;
+    white-space: nowrap;
 
-    }
+    flex-shrink: 0;
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+    transition:
+        opacity 180ms ease,
+        transform 220ms ease;
+
+}
 
 
     .workspace-nav .nav-button:hover {
@@ -461,26 +478,29 @@
     }
 
 
-    .sidebar-collapsed
-    .workspace-nav
-    .nav-button {
+.sidebar-collapsed
+.workspace-nav
+.nav-button {
 
-        justify-content: center;
+    justify-content: flex-start;
 
-        padding: 0;
+    padding: 0 14px;
 
-        gap: 0;
+    gap: 12px;
 
-    }
+}
 
+.sidebar-collapsed
+.workspace-nav
+.nav-button span {
 
-    .sidebar-collapsed
-    .workspace-nav
-    .nav-button span {
+    opacity: 0;
 
-        display: none;
+    transform: translateX(-6px);
 
-    }
+    pointer-events: none;
+
+}
 
 }
 
@@ -493,7 +513,11 @@
 
     .app-shell,
 
+    .app-shell.desktop-layout-ready,
+
     .sidebar-toggle svg,
+
+    .workspace-nav .nav-button span,
 
     .workspace-nav.desktop-ready
     .desktop-indicator {
