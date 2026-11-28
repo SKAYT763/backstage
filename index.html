@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="intro.css">
     <link rel="stylesheet" href="ui/navigation.css">
     <link rel="stylesheet" href="ui/liquid.css">
+    <link rel="stylesheet" href="ui/desktop.css">
 </head>
 <body>
     <script src="intro.js"></script>
@@ -72,20 +73,51 @@
 
     <!-- 1. Основная навигация -->
 
-    <aside class="workspace-sidebar">
+<aside class="workspace-sidebar">
+
+    <div class="desktop-sidebar-header">
 
         <p class="workspace-label">
             WORKSPACE
         </p>
 
-        
-<nav class="workspace-nav"
+        <button
+            type="button"
+            id="sidebarToggle"
+            class="sidebar-toggle"
+            aria-label="Свернуть панель"
+            aria-expanded="true"
+            aria-controls="workspaceNav"
+            title="Свернуть панель"
+        >
+
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+
+                <path d="
+                    m11 6 -6 6 6 6
+                    m7 -12 -6 6 6 6
+                "/>
+
+            </svg>
+
+        </button>
+
+    </div>
+
+<nav 
+    id="workspaceNav"
+    class="workspace-nav"
      aria-label="Основные разделы">
 
     <button type="button"
             class="nav-button"
-            data-nav-module="audio-lab">
-
+            data-nav-module="audio-lab"
+        title="Audio Lab"
+        aria-label="Audio Lab">
+        
         <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M2 10v4 M6 6v12 M10 2v20
                      M14 5v14 M18 8v8 M22 11v2"/>
@@ -96,7 +128,9 @@
 
     <button type="button"
             class="nav-button"
-            data-nav-module="chord-lab">
+            data-nav-module="chord-lab"
+        title="Chord Lab"
+        aria-label="Chord Lab">
 
         <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M9 18V5l12-3v13 M9 9l12-3"/>
@@ -109,7 +143,9 @@
 
     <button type="button"
             class="nav-button"
-            data-nav-module="stem-lab">
+            data-nav-module="stem-lab"
+        title="Stem Lab"
+        aria-label="Stem Lab">
 
         <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="m12 2 10 5-10 5L2 7z
@@ -122,7 +158,9 @@
 
     <button type="button"
             class="nav-button"
-            data-nav-module="audio-tools">
+            data-nav-module="audio-tools"
+        title="Audio Tools"
+        aria-label="Audio Tools">
 
         <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 3v18 M12 3v18 M20 3v18
@@ -134,7 +172,9 @@
 
     <button type="button"
             class="nav-button"
-            data-nav-module="artist-hub">
+            data-nav-module="artist-hub"
+        title="Artist Hub"
+        aria-label="Artist Hub">
 
         <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="7" r="4"/>
